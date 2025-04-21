@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rishan's Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .smooth-scroll {
+            scroll-behavior: smooth;
+        }
+        /* Fade-in animation for sections */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Bounce animation for button */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+        .bounce:hover {
+            animation: bounce 1s;
+        }
+        /* Slide-in animation for form inputs */
+        .slide-in {
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        .slide-in.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        /* Project card hover effect */
+        .project-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .project-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        /* 3D Cube Styles */
+        .cube-container {
+            perspective: 1000px;
+            width: 200px;
+            height: 200px;
+        }
+        .cube {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: spin 5s infinite linear;
+        }
+        .face {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(59, 130, 246, 0.8);
+            border: 2px solid #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
+        .front  { transform: rotateY(0deg) translateZ(100px); }
+        .back   { transform: rotateY(180deg) translateZ(100px); }
+        .left   { transform: rotateY(-90deg) translateZ(100px); }
+        .right  { transform: rotateY(90deg) translateZ(100px); }
+        .top    { transform: rotateX(90deg) translateZ(100px); }
+        .bottom { transform: rotateX(-90deg) translateZ(100px); }
+        @keyframes spin {
+            from {
+                transform: rotateX(0deg) rotateY(0deg);
+            }
+            to {
+                transform: rotateX(360deg) rotateY(360deg);
+            }
+        }
+        /* Fade-in animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .service-card {
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        textarea {
+            height: 170px;
+            resize: none;
+        }
+    </style>
+    <script>
+        async function submitForm(event) {
+            event.preventDefault();
+
+            const form = document.getElementById('contactForm');
+            const formData = new FormData(form);
+
+            const data = {
+                name: formData.get('name'),
+                email: formData.get('email'),
+                message: formData.get('message'),
+            };
+
+            try {
+                const response = await fetch('https://script.google.com/macros/s/AKfycbxKweguLep2kYGXQBIVjGX1hAvDNNJBGo3b6C9yjQcNL1cNZ6ybPAprwfZWtI3QOJoXTQ/exec', {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                const result = await response.json();
+                if (result.status === 'success') {
+                    alert('Form submitted successfully!');
+                    form.reset();
+                } else {
+                    alert('Failed to submit the form.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while submitting the form.');
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100 text-gray-800 smooth-scroll">
+    <!-- Navigation Bar -->
+    <nav class="bg-black shadow-lg fixed w-full z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold text-indigo-600" style="background-image: none;">Rishan</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="#home" class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300" style="color: azure;">Home</a>
+                    <a href="#about" class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300"  style="color: azure;">About</a>
+                    <a href="#services" class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300" style="color: azure;">Services</a>
+                    <a href="#projects" class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300"  style="color: azure;">Projects</a>
+                    <a href="#contact" class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300"  style="color: azure;">Contact</a>
+                    <a href="#game" class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300" style="color: azure;">Play Time</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-500 to-purple-600 text-white">
+        <div class="text-center max-w-3xl mx-auto px-4">
+            <h1 class="text-5xl font-bold mb-4">Welcome to Rishan's World</h1>
+            <p class="text-xl mb-6">I'm passionate about creating awesome web experiences.</p>
+            <p>-MOHAMMED RISHAN AP-</p>
+            <a href="#projects" class="inline-block bg-white text-indigo-600 font-semibold py-3 px-6 rounded-full hover:bg-indigo-100 transition bounce">View My Work</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white fade-in">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12">About Me</h2>
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0">
+                    <img src="image.jpg" alt="Rishan" class="rounded-lg shadow-lg mx-auto">
+                </div>
+                <div class="md:w-1/2 md:pl-10">
+                    <p class="text-lg text-gray-600 leading-relaxed">
+                        I’m a web developer and a student. I enjoy creating websites that look good and work well. I also have experience in managing projects and ensuring timely completion. I’m skilled at solving problems and finding efficient solutions to challenges. I thrive in collaborative environments and always strive to deliver my best in every project.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-gradient-to-r from-indigo-500 to-purple-600 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center mb-12 animate-fade-in">Our Services</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white text-gray-800 p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-500 service-card">
+                    <h3 class="text-2xl font-semibold mb-4">Web Development</h3>
+                    <p class="text-gray-600">We create responsive and modern websites tailored to your business needs.</p>
+                    <div class="mt-4">
+                        <a href="#" class="text-indigo-600 hover:underline">Learn More</a>
+                    </div>
+                </div>
+                <div class="bg-white text-gray-800 p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-500 service-card">
+                    <h3 class="text-2xl font-semibold mb-4">Graphic Design</h3>
+                    <p class="text-gray-600">Our team designs stunning visuals to enhance your brand identity.</p>
+                    <div class="mt-4">
+                        <a href="#" class="text-indigo-600 hover:underline">Learn More</a>
+                    </div>
+                </div>
+                <div class="bg-white text-gray-800 p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-500 service-card">
+                    <h3 class="text-2xl font-semibold mb-4">video editing</h3>
+                    <p class="text-gray-600">Boost your online presence with our strategic editing solution solutions.</p>
+                    <div class="mt-4">
+                        <a href="#" class="text-indigo-600 hover:underline">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-gray-100 fade-in">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12">My Projects</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden project-card">
+                    <img src="Screenshot 2025-04-16 234032.png" alt="Project 1" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Project One</h3>
+                        <p class="text-gray-600 mb-4">A web app built with HTML, CSS, and JavaScript to showcase interactive features.</p>
+                        <a href="#" class="text-indigo-600 hover:underline">View Project</a>
+                    </div>
+                </div>
+                <!-- Project 2 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden project-card">
+                    <img src="Screenshot 2025-04-16 234913.png" alt="Project 2" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Project Two</h3>
+                        <p class="text-gray-600 mb-4">A responsive portfolio website designed with Tailwind CSS.</p>
+                        <a href="#" class="text-indigo-600 hover:underline">View Project</a>
+                    </div>
+                </div>
+                <!-- Project 3 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden project-card">
+                    <img src="dddd.png" alt="Project 2" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Project Three</h3>
+                        <p class="text-gray-600 mb-4">A responsive portfolio website designed with Tailwind CSS.</p>
+                        <a href="#" class="text-indigo-600 hover:underline">View Project</a>
+                    </div>
+                </div>
+                <!-- Project 4 -->
+                <div class="box-shadow">
+                    <img src="rrrrrr.png" alt="Project 3" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Project Four</h3>
+                        <p class="text-gray-600 mb-4">An e-commerce platform with dynamic product filtering.</p>
+                        <a href="#" class="text-indigo-600 hover:underline">View Project</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-white fade-in">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12">Contact Me</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- About Me Information -->
+                <div class="bg-gray-100 p-6 rounded-lg shadow-lg">
+                    <h3 class="text-2xl font-bold mb-4">About Me</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Hi, I'm Rishan, a passionate web developer and a student. I love creating innovative web experiences. Feel free to reach out to me for collaborations or inquiries!
+                    </p>
+                    <p class="text-gray-600 leading-relaxed mt-4">
+                        <strong><i class="fas fa-phone-alt text-indigo-600"></i> Phone:</strong> 9961716828<br>
+                        <strong><i class="fas fa-envelope text-indigo-600"></i> Email:</strong> mohammedrishan.ap99@gmail.com<br>
+                        <strong><i class="fab fa-instagram text-indigo-600"></i> Instagram:</strong> 
+                        <a href="https://www.instagram.com/rishan_r4boys/" target="_blank" class="text-indigo-600 hover:underline">@rishan_r4boys</a><br>
+                        <strong><i class="fas fa-map-marker-alt text-indigo-600"></i> Location:</strong> Melmuri, Malappuram, Kerala, India
+                    </p>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="colum">
+                    <form id="submit-Form" method="post" action="https://script.google.com/macros/s/AKfycbxKweguLep2kYGXQBIVjGX1hAvDNNJBGo3b6C9yjQcNL1cNZ6ybPAprwfZWtI3QOJoXTQ/exec">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Name Field -->
+                            <div>
+                                <label for="fname" class="block text-sm font-medium text-gray-700">First Name</label>
+                                <input type="text" id="fname" name="name" placeholder="Your Name" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                            </div>
+
+                            <!-- Email Field -->
+                            <div>
+                                <label for="lname" class="block text-sm font-medium text-gray-700">Email</label>
+                                <input type="email" id="lname" name="email" placeholder="Your Email" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                            </div>
+                        </div>
+
+                        <!-- Country Field -->
+                        <div class="mt-4">
+                            <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
+                            <select name="country" id="country" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                                <option value="australia">Australia</option>
+                                <option value="India">India</option>
+                                <option value="usa">USA</option>
+                            </select>
+                        </div>
+
+                        <!-- Subject Field -->
+                        <div class="mt-4">
+                            <label for="subject" class="block text-sm font-medium text-gray-700">Subject</label>
+                            <textarea name="message" id="subject" placeholder="Write something..." required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="mt-4 text-center">
+                            <input type="submit" value="Submit" class="bg-indigo-600 text-white font-semibold py-2 px-6 rounded-md hover:bg-indigo-700 transition">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Game Section -->
+    <section id="game" class="py-20 bg-gray-100" >
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12">Play Time</h2>
+            <div class="flex justify-center">
+                <div id="tic-tac-toe" class="grid grid-cols-3 gap-2 w-64">
+                    <!-- Game cells -->
+                    <div class="cell bg-white border border-gray-300 h-20 flex items-center justify-center text-2xl font-bold cursor-pointer"></div>
+                    <div class="cell bg-white border border-gray-300 h-20 flex items-center justify-center text-2xl font-bold cursor-pointer"></div>
+                    <div class="cell bg-white border border-gray-300 h-20 flex items-center justify-center text-2xl font-bold cursor-pointer"></div>
+                    <div class="cell bg-white border border-gray-300 h-20 flex items-center justify-center text-2xl font-bold cursor-pointer"></div>
+                    <div class="cell bg-white border border-gray-300 h-20 flex items-center justify-center text-2xl font-bold cursor-pointer"></div>
+                    <div class="cell bg-white border border-gray-300 h-20 flex items-center justify-center text-2xl font-bold cursor-pointer"></div>
+                    <div class="cell bg-white border border-gray-300 h-20 flex items-center justify-center text-2xl font-bold cursor-pointer"></div>
+                    <div class="cell bg-white border border-gray-300 h-20 flex items-center justify-center text-2xl font-bold cursor-pointer"></div>
+                    <div class="cell bg-white border border-gray-300 h-20 flex items-center justify-center text-2xl font-bold cursor-pointer"></div>
+                </div>
+            </div>
+            <div class="text-center mt-6">
+                <button onclick="resetGame()" class="bg-indigo-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-indigo-700 transition">Reset Game</button>
+            </div>
+            <p id="game-status" class="text-center mt-4 text-lg font-medium"></p>
+        </div>
+    </section>
+
+   
+   
+
+    <script>
+        // Intersection Observer for fade-in animations
+        const fadeInElements = document.querySelectorAll('.fade-in');
+        const slideInElements = document.querySelectorAll('.slide-in');
+
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const fadeObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        fadeInElements.forEach(element => fadeObserver.observe(element));
+        slideInElements.forEach(element => fadeObserver.observe(element));
+
+        // Tic-Tac-Toe Game Logic
+        const cells = document.querySelectorAll('.cell');
+        let currentPlayer = 'X';
+        let gameActive = true;
+        const statusDisplay = document.getElementById('game-status');
+
+        const winningConditions = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+            [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+            [0, 4, 8], [2, 4, 6]             // Diagonals
+        ];
+
+        function handleCellClick(event) {
+            const cell = event.target;
+
+            if (cell.textContent !== '' || !gameActive) return;
+
+            cell.textContent = currentPlayer;
+            checkResult();
+
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            statusDisplay.textContent = `Player ${currentPlayer}'s Turn`;
+        }
+
+        function checkResult() {
+            let roundWon = false;
+
+            for (let condition of winningConditions) {
+                const [a, b, c] = condition;
+                if (cells[a].textContent && cells[a].textContent === cells[b].textContent && cells[a].textContent === cells[c].textContent) {
+                    roundWon = true;
+                    break;
+                }
+            }
+
+            if (roundWon) {
+                statusDisplay.textContent = `Player ${currentPlayer} Wins!`;
+                gameActive = false;
+                return;
+            }
+
+            if (Array.from(cells).every(cell => cell.textContent !== '')) {
+                statusDisplay.textContent = 'It\'s a Draw!';
+                gameActive = false;
+            }
+        }
+
+        function resetGame() {
+            cells.forEach(cell => cell.textContent = '');
+            currentPlayer = 'X';
+            gameActive = true;
+            statusDisplay.textContent = `Player ${currentPlayer}'s Turn`;
+        }
+
+        cells.forEach(cell => cell.addEventListener('click', handleCellClick));
+    </script>
+</body>
+</html>
