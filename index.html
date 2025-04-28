@@ -144,7 +144,7 @@
                     alert('Form submitted successfully!');
                     form.reset();
                 } else {
-                    alert('Failed to submit the form.');
+                    alert(' submited the form.');
                 }
             } catch (error) {
                 console.error('Error:', error);
@@ -319,6 +319,19 @@
                                 <option value="australia">Australia</option>
                                 <option value="India">India</option>
                                 <option value="usa">USA</option>
+                                <option value="usa">Japan</option>
+                                <option value="usa">Nigeria</option>
+                                <option value="usa">Argentina</option>
+                                <option value="usa">Italy</option>
+                                <option value="usa">Spain</option>
+                                <option value="usa">New Zealand</option>
+                                <option value="usa">Mexico</option>
+                                <option value="usa">China</option>
+                                <option value="usa">Brazil</option>
+                                <option value="usa">Canada</option>
+                                <option value="usa">France</option>
+                                <option value="usa">Russia</option>
+                                <option value="usa">South Africa</option>
                             </select>
                         </div>
 
@@ -363,7 +376,7 @@
         </div>
     </section>
 
-   
+    <script src="https://cdn.jotfor.ms/s/umd/latest/for-embedded-agent.js"></script>
    
 
     <script>
@@ -442,6 +455,28 @@
         }
 
         cells.forEach(cell => cell.addEventListener('click', handleCellClick));
+
+  window.addEventListener("DOMContentLoaded", function() {
+    window.AgentInitializer.init({
+      rootId: "JotformAgent-0196679443a776088cdf6c1db7ea2a5e0dcc",
+      formID: "0196679443a776088cdf6c1db7ea2a5e0dcc",
+      queryParams: ["skipWelcome=1", "maximizable=1"],
+      domain: "https:\/\/www.jotform.com",
+      isInitialOpen: false,
+      isDraggable: false,
+      background: "linear-gradient(180deg, #080808 0%, #03e0e9 100%)",
+      buttonBackgroundColor: "#8E1CA8",
+      buttonIconColor: "#FFFFFF",
+      variant: false,
+      customizations: {
+        greeting: "Yes",
+        greetingMessage: "Hi! How can I assist you?",
+        pulse: "Yes",
+        position: "right"
+      }
+    });
+  });
+
     </script>
 </body>
 </html>
